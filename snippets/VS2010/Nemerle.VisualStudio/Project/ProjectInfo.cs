@@ -17,7 +17,6 @@ using Nemerle.Completion2;
 
 using Nemerle.VisualStudio.LanguageService;
 
-using MSBuild = Microsoft.Build.BuildEngine;
 using SourceMap = System.Collections.Generic.Dictionary<int, Nemerle.Completion2.IIdeSource>;
 using Nemerle.VisualStudio.GUI;
 using Microsoft.VisualStudio.Shell;

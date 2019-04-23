@@ -23,9 +23,7 @@ using Nemerle.VisualStudio.WPFProviders;
 
 using PkgUtils = Microsoft.VisualStudio.Project.Utilities;
 using OleConstants = Microsoft.VisualStudio.OLE.Interop.Constants;
-using MsBuildProject = Microsoft.Build.BuildEngine.Project;
 using VsCommands = Microsoft.VisualStudio.VSConstants.VSStd97CmdID;
-using VsCommands2K = Microsoft.VisualStudio.VSConstants.VSStd2KCmdID;
 
 using MSBuild = Microsoft.Build.Evaluation;
 using OsProcess = System.Diagnostics.Process;

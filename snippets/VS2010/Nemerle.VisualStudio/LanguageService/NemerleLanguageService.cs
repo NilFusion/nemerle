@@ -686,6 +686,9 @@ namespace Nemerle.VisualStudio.LanguageService
 
     private static bool IsIntersectedWithSmartTag(IVsTextView view, Rect rect)
     {
+#if VS2019EXT
+      return false;
+#else
       var textView = view.ToITextView();
       var smartTagBroker = textView.GetSmartTagBroker();
 
@@ -704,6 +707,7 @@ namespace Nemerle.VisualStudio.LanguageService
       }
 
       return false;
+#endif
     }
 
     #endregion

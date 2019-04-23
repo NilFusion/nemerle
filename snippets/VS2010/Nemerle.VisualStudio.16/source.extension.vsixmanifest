@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Publisher="Nemerle Team" Id="FFFFeaae-d2c0-461d-8ff6-b3bc8d67bcfe" Version="1.2.9999.0" Language="en-US" />
+    <DisplayName>Nemerle</DisplayName>
+    <Description xml:space="preserve">Visual Studio integration extension for Nemerle - high-level statically-typed programming language for the .NET platform. It offers functional, object-oriented and imperative features, has a simple C#-like syntax and a powerful meta-programming system</Description>
+    <MoreInfo>http://nemerle.org/</MoreInfo>
+    <Icon>Resources\Nemerle.ico</Icon>
+    <PreviewImage>Resources\Nemerle.ico</PreviewImage>
+  </Metadata>
+  <Installation AllUsers="true">
+    <InstallationTarget Version="[16.0,17.0)" Id="Microsoft.VisualStudio.IntegratedShell" />
+  </Installation>
+  <Dependencies>
+    <Dependency d:Source="Installed" Id="Microsoft.VisualStudio.MPF.16.0" DisplayName="Visual Studio MPF 16.0" Version="[16.0,17.0)" />
+  </Dependencies>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%;PkgdefProjectOutputGroup" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Nemerle" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="File" Path="ItemTemplates" d:TargetPath="ItemTemplates\Nemerle" />
+  </Assets>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[16.0,17.0)" DisplayName="Visual Studio core editor" />
+  </Prerequisites>
+</PackageManifest>

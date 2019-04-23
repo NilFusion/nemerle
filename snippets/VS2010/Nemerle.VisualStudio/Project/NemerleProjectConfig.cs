@@ -1,14 +1,11 @@
 ﻿using System;
 using Microsoft.VisualStudio.Project;
 
-using MSBuild = Microsoft.Build.BuildEngine;
 //using ComInteropHelpers;
 using Microsoft.VisualStudio.Shell.Interop;
 using System.Runtime.InteropServices;
 using System.IO;
-using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio;
-using System.Diagnostics;
 
 namespace Nemerle.VisualStudio.Project
 {

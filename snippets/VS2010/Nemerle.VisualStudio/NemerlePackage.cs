@@ -91,8 +91,10 @@ namespace Nemerle.VisualStudio
 	[ProvideObject(typeof(NemerleGeneralPropertyPage))]
 	[ProvideObject(typeof(NemerleDebugPropertyPage))]
 	[ProvideObject(typeof(NemerleBuildPropertyPage))]
-	[ProvideObject(typeof(NemerleWACodeBehindEventBinding))]
-	[ProvideEditorExtension(typeof(NemerleEditorFactory), NemerleConstants.FileExtension, 32)]
+#if !VS2019EXT
+    [ProvideObject(typeof(NemerleWACodeBehindEventBinding))]
+#endif
+    [ProvideEditorExtension(typeof(NemerleEditorFactory), NemerleConstants.FileExtension, 32)]
 
 	// Attention! These guids are magic numbers provided by Microsoft. Don't change them.
 	//
@@ -134,13 +136,15 @@ namespace Nemerle.VisualStudio
 	[WAProvideLanguageProperty(typeof(WANemerleProjectFactory), "CodeFileExtension", NemerleConstants.FileExtension)]
 	[WAProvideLanguageProperty(typeof(WANemerleProjectFactory), "TemplateFolder", NemerleConstants.LanguageId)]
 	[WAProvideLanguageProperty(typeof(WANemerleProjectFactory), "CodeBehindCodeGenerator", NemerleConstants.WACodeBehindCodeGeneratorGuidString)]
-	[WAProvideLanguageProperty(typeof(WANemerleProjectFactory), "CodeBehindEventBinding", typeof(NemerleWACodeBehindEventBinding))]
+#if !VS2019EXT
+    [WAProvideLanguageProperty(typeof(WANemerleProjectFactory), "CodeBehindEventBinding", typeof(NemerleWACodeBehindEventBinding))]
+#endif
 
 	[ProvideLanguageEditorOptionPage(typeof(NemerleOptionsPage), @"Nemerle", "Advanced", "", "Tool_Option_Nemerle_Advanced_PageName")]
-	#endregion
+#endregion
 	public class NemerlePackage : ProjectPackage, IOleComponent, IVsInstalledProduct
 	{
-		#region Fields
+#region Fields
 
 		public OleMenuCommand RefactoringMenu { get; private set; }
 		public OleMenuCommand SelectionExtend { get; private set; }
@@ -152,9 +156,9 @@ namespace Nemerle.VisualStudio
 		private MySolutionListener       _mySolutionListener;
 		private bool                     _allProjectInSolutionIsLoaded;
 
-		#endregion
+#endregion
 
-		#region Initialize
+#region Initialize
 
 		public NemerlePackage()
 		{
@@ -396,9 +400,9 @@ namespace Nemerle.VisualStudio
 			}
 		}
 
-		#endregion
+#endregion
 
-		#region Commands
+#region Commands
 
 		/// <summary>
 		/// This function is called when the user clicks the menu item that shows the
@@ -430,9 +434,9 @@ namespace Nemerle.VisualStudio
 			ErrorHandler.ThrowOnFailure(windowFrame.Show());
 		}
 
-		#endregion
+#endregion
 
-		#region Properties
+#region Properties
 
 		public bool UseSmartTab
 		{
@@ -444,9 +448,9 @@ namespace Nemerle.VisualStudio
 			}
 		}
 
-		#endregion Methods
+#endregion Methods
 
-		#region Methods
+#region Methods
 
 		/// <summary>
 		/// Changes the cursor to the hourglass cursor.
@@ -480,9 +484,9 @@ namespace Nemerle.VisualStudio
 			}
 		}
 
-		#endregion
+#endregion
 
-		#region GetService()
+#region GetService()
 
 		internal T GetService<T>(bool throwIfFail)
 			where T : class
@@ -524,9 +528,9 @@ namespace Nemerle.VisualStudio
 			return GetService<IOleComponentManager, SOleComponentManager>(true);
 		}
 
-		#endregion
+#endregion
 
-		#region Dispose()
+#region Dispose()
 
 		protected override void Dispose(bool disposing)
 		{
@@ -554,9 +558,9 @@ namespace Nemerle.VisualStudio
 			}
 		}
 
-		#endregion
+#endregion
 
-		#region Overrides
+#region Overrides
 
 		public override string ProductUserContext
 		{
@@ -575,9 +579,9 @@ namespace Nemerle.VisualStudio
 			return res;
 		}
 
-		#endregion
+#endregion
 
-		#region IOleComponent Members
+#region IOleComponent Members
 
 		public int FContinueMessageLoop(uint uReason, IntPtr pvLoopData, MSG[] pMsgPeeked)
 		{
@@ -636,9 +640,9 @@ namespace Nemerle.VisualStudio
 		{
 		}
 
-		#endregion
+#endregion
 
-		#region IVsInstalledProduct Members
+#region IVsInstalledProduct Members
 
 		public int IdBmpSplash(out uint pIdBmp)
 		{
@@ -670,6 +674,6 @@ namespace Nemerle.VisualStudio
 			return VSConstants.S_OK;
 		}
 
-		#endregion
+#endregion
 	}
 }

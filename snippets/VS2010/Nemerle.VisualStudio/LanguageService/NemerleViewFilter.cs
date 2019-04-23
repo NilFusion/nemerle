@@ -369,6 +369,7 @@ namespace Nemerle.VisualStudio.LanguageService
 						break; // go trocess ESC
 
 					case ShowSmartTag:
+#if !VS2019EXT
 						var textView = TextView.ToITextView();
 						var smartTagBroker = textView.GetSmartTagBroker();
 
@@ -382,6 +383,7 @@ namespace Nemerle.VisualStudio.LanguageService
 								return VSConstants.S_OK;
 							}
 						}
+#endif
 
 						return VSConstants.S_OK;
 				}

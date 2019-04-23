@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
-    <VsSDKInstall>$(MSBuildProjectDirectory)\..\..\..\ExternalDependences\vssdk2010\</VsSDKInstall>
-    <VsSDKIncludes>$(VsSDKInstall)\VisualStudioIntegration\Common\Inc</VsSDKIncludes>
-    <VsSDKSources>$(VsSDKInstall)\VisualStudioIntegration\Common\Source</VsSDKSources>
-    <VsSDKToolsPath>$(VsSDKInstall)\VisualStudioIntegration</VsSDKToolsPath>
-    <VsixSchemaPath>$(VsSDKInstall)\Schemas\VSIXManifestSchema.xsd</VsixSchemaPath>
-    <ReferencePath>$(VsSDKInstall)\PublicAssemblies\;$(VsSDKInstall)\VisualStudioIntegration\Common\Assemblies\v4.0</ReferencePath>
-    <MSBuildCommunityTasksPath>$(MSBuildProjectDirectory)\..\..\..\ExternalDependences</MSBuildCommunityTasksPath>
+    <VsSDKInstall>$(MSBuildThisFileDirectory)..\..\..\ExternalDependences\vssdk2010\</VsSDKInstall>
+    <VsSDKIncludes>$(VsSDKInstall)VisualStudioIntegration\Common\Inc\</VsSDKIncludes>
+    <VsSDKSources>$(VsSDKInstall)VisualStudioIntegration\Common\Source\</VsSDKSources>
+    <VsSDKToolsPath>$(VsSDKInstall)VisualStudioIntegration\</VsSDKToolsPath>
+    <VsixSchemaPath>$(VsSDKInstall)Schemas\VSIXManifestSchema.xsd</VsixSchemaPath>
+    <ReferencePath>$(VsSDKInstall)PublicAssemblies\;$(VsSDKInstall)\VisualStudioIntegration\Common\Assemblies\v4.0\</ReferencePath>
+    <MSBuildCommunityTasksPath>$(MSBuildThisFileDirectory)..\..\..\ExternalDependences\</MSBuildCommunityTasksPath>
   </PropertyGroup>
   <PropertyGroup>
-    <Nemerle Condition=" '$(Nemerle)' == '' ">$(ProgramFiles)\Nemerle\Net-4.0</Nemerle>
+    <Nemerle Condition=" '$(Nemerle)' == '' And Exists('$(ProgramFiles)\Nemerle\Net-4.0') ">$(ProgramFiles)\Nemerle\Net-4.0</Nemerle>
+    <Nemerle Condition=" '$(Nemerle)' == '' And Exists('$(MSBuildThisFileDirectory)..\..\..\bin\Debug\net-4.0\Stage4\') ">$(MSBuildThisFileDirectory)..\..\..\bin\Debug\net-4.0\Stage4\</Nemerle>
     <Platform>x86</Platform>
     <PlatformTarget>x86</PlatformTarget>
     <SignAssembly>true</SignAssembly>
@@ -327,9 +328,7 @@
     <Compile Include="Project\ModuleID.cs" />
     <Compile Include="Project\NemerleDependentFileNode.cs" />
     <Compile Include="Project\NemerleFileDocumentManager.cs" />
-    <Compile Include="Project\NemerleFileNodeCodeDomProvider.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Project\NemerleFileNodeCodeDomProvider.cs" />
     <Compile Include="Project\NemerleOAFileItem.cs" />
     <Compile Include="Project\HierarchyEventArgs.cs" />
     <Compile Include="Project\INemerleLibraryManager.cs" />
@@ -787,10 +786,6 @@
       <SubType>Designer</SubType>
     </VSCTCompile>
   </ItemGroup>
-  <ItemGroup>
-    <WebReferences Include="Web References\" />
-  </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <GetVsixSourceItemsDependsOn>$(GetVsixSourceItemsDependsOn);GetVsixTemplateItems</GetVsixSourceItemsDependsOn>
   </PropertyGroup>
@@ -804,6 +799,10 @@
       </VSIXSourceItem>
     </ItemGroup>
   </Target>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <CreateVsixContainerDependsOn>$(CreateVsixContainerDependsOn);SetVsixManifestExtensionVersion</CreateVsixContainerDependsOn>
   </PropertyGroup>

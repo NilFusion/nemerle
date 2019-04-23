@@ -75,6 +75,7 @@ namespace Nemerle.VisualStudio
       return str.Replace("&", "&amp;").Replace(">", "&gt;").Replace("<", "&lt;");
     }
 
+#if !VS2019EXT
     public static ISmartTagBroker GetSmartTagBroker(this ITextView textView)
     {
       ISmartTagBroker tag = null;
@@ -82,6 +83,7 @@ namespace Nemerle.VisualStudio
       textView.Properties.TryGetProperty<ISmartTagBroker>(typeof(ISmartTagBroker), out tag);
       return tag;
     }
+#endif
 
     public static IVsTextBuffer ToIVsTextBuffer(this ITextBuffer textBuffer)
     {

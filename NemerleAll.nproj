@@ -34,6 +34,7 @@
     <NBoot>$(NBin)\boot\</NBoot>
     <!-- Project Constants -->
     <NInstallIntegration Condition=" '$(NInstallIntegration)' == '' ">False</NInstallIntegration>
+	<NeedNewExtension Condition=" '$(NeedNewExtension)' == '' ">False</NeedNewExtension>
   </PropertyGroup>
   <PropertyGroup Condition="'$(UseMSBuild)' != ''">
     <NProjectConstants Condition="'$(TargetFrameworkVersion)' == '' Or '$(TargetFrameworkVersion)' == 'v2.0' Or '$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.5'">RUNTIME_MS</NProjectConstants>
@@ -164,7 +165,8 @@
   <ItemGroup Condition="'$(UseMSBuild)' != '' And ('$(TargetFrameworkVersion)' == 'v4.0' Or '$(TargetFrameworkVersion)' == 'v4.5' Or '$(TargetFrameworkVersion)' == 'v4.5.1')">
     <NIntegrationProject Include="$(NRoot)\snippets\VS2010\WpfHint\WpfHint.csproj" />
     <NIntegrationProject Include="$(NRoot)\snippets\VS2010\Nemerle.Compiler.Utils\Nemerle.Compiler.Utils.csproj" />
-    <NIntegrationProject Include="$(NRoot)\snippets\VS2010\Nemerle.VisualStudio\Nemerle.VisualStudio.csproj" />
+    <NIntegrationProject Include="$(NRoot)\snippets\VS2010\Nemerle.VisualStudio\Nemerle.VisualStudio.csproj" Condition=" '$(NeedNewExtension)' == 'False' " />
+	<NIntegrationNextProject Include="$(NRoot)\snippets\VS2010\Nemerle.VisualStudio\Nemerle.VisualStudio.16.csproj" Condition=" '$(NeedNewExtension)' == 'True' " />
   </ItemGroup>
 
   <!--Initialize FX and SDK tools locations-->
@@ -183,7 +185,8 @@
     </GetFrameworkSdkPath>
     <PropertyGroup Condition="'$(UseMSBuild)' != ''">
       <SDKBin Condition="'$(SDKBin)' == '' And ('$(TargetFrameworkVersion)' == '' Or '$(TargetFrameworkVersion)' == 'v2.0' Or '$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.5')">$(SDK)\bin</SDKBin>
-      <SDKBin Condition="'$(SDKBin)' == '' And Exists('$(SDK_3)..\v10.0A\bin\NETFX 4.6.1 Tools\al.exe')">$(SDK_3)..\v10.0A\bin\NETFX 4.6.1 Tools</SDKBin>
+      <SDKBin Condition="'$(SDKBin)' == '' And Exists('$(SDK_3)..\v10.0A\bin\NETFX 4.7.2 Tools\al.exe')">$(SDK_3)..\v10.0A\bin\NETFX 4.7.2 Tools</SDKBin>
+	  <SDKBin Condition="'$(SDKBin)' == '' And Exists('$(SDK_3)..\v10.0A\bin\NETFX 4.6.1 Tools\al.exe')">$(SDK_3)..\v10.0A\bin\NETFX 4.6.1 Tools</SDKBin>
       <SDKBin Condition="'$(SDKBin)' == '' And Exists('$(SDK_3)..\v10.0A\bin\NETFX 4.6 Tools\al.exe')"  >$(SDK_3)..\v10.0A\bin\NETFX 4.6 Tools</SDKBin>
       <SDKBin Condition="'$(SDKBin)' == '' And Exists('$(SDK_3)..\v8.1A\bin\NETFX 4.5.1 Tools\al.exe')" >$(SDK_3)..\v8.1A\bin\NETFX 4.5.1 Tools</SDKBin>
       <SDKBin Condition="'$(SDKBin)' == '' And Exists('$(SDK_3)..\v8.1A\bin\NETFX 4.5 Tools\al.exe')"   >$(SDK_3)..\v8.1A\bin\NETFX 4.5 Tools</SDKBin>
@@ -426,7 +429,15 @@
 
   <!--Helper target to build integration-->
   <Target Name="_Integration" DependsOnTargets="Linq;Unsafe;TestFramework;Tools" Condition="'$(UseMSBuild)' != ''">
-    <MSBuild Projects="@(NIntegrationProject)" Properties="OutputPath=$(NBin)\VsIntegration\; Nemerle=$(NCurBin); Configuration=$(Configuration); BaseIntermediateOutputPath=$(NObj)\VsIntegration\; IntermediateOutputPath=$(NObj)\VsIntegration\; NKeysDir=$(NBin)\keys; DeployExtension=$(NInstallIntegration)" Targets="$(NTargetName)"  />
+	<PropertyGroup>
+		<!--TODO BaseIntermediateOutputPath=$(NObj)\VsIntegration\; IntermediateOutputPath=$(NObj)\VsIntegration\; does not work because of nuget and project.assets.json-->
+		<IntegrationProperties>OutputPath=$(NBin)\VsIntegration\; Nemerle=$(NCurBin); Configuration=$(Configuration); NKeysDir=$(NBin)\keys; DeployExtension=$(NInstallIntegration)</IntegrationProperties>
+		<IntegrationNextProperties>$(IntegrationProperties); TargetFrameworkVersion=v4.7.2</IntegrationNextProperties>
+	</PropertyGroup>
+	<!--<MSBuild Projects="@(NIntegrationProject)" Properties="$(IntegrationProperties)" Targets="Restore"  />-->
+    <MSBuild Projects="@(NIntegrationProject)" Properties="$(IntegrationProperties)" Targets="$(NTargetName)"  />
+	<MSBuild Projects="@(NIntegrationNextProject)" Properties="$(IntegrationNextProperties)" Targets="Restore"  />
+	<MSBuild Projects="@(NIntegrationNextProject)" Properties="$(IntegrationNextProperties)" Targets="$(NTargetName)"  />
   </Target>
 
   <Target Name="TestFramework">
