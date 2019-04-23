@@ -1,3 +1,20 @@
+# About this branch
+
+This branch aims to provide extension for Visual Studio 2019
+
+How to build:
+Open Visual Studio 2019 Command Prompt, and run this command for full build with tests:
+```bat
+MSBuild.exe NemerleAll.nproj /target:IntegrationFull /p:Configuration=Release /p:NTargetName=Build /p:TargetFrameworkVersion=v4.0 /p:NeedNewExtension=True
+```
+and this command for quick build:
+```bat
+MSBuild.exe NemerleAll.nproj /target:IntegrationFast /p:Configuration=Release /p:NTargetName=Build /p:TargetFrameworkVersion=v4.0 /p:NeedNewExtension=True
+```
+Built extension will be located at bin\Release\net-4.0\VsIntegration\Nemerle.VisualStudio.16.vsix
+
+For now, old extension does not build from VS2019
+
 # What Is It
 
 [![Join the chat at https://gitter.im/rsdn/nemerle](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/rsdn/nemerle?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
