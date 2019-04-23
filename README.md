@@ -3,7 +3,7 @@
 This branch aims to provide extension for Visual Studio 2019
 
 How to build:
-Open Visual Studio 2019 Command Prompt, and run this command for full build with tests:
+Open Visual Studio 2019 Command Prompt (you most probably will need to install "Visual Studio extension development" configuration), and run this command for full build with tests:
 ```bat
 MSBuild.exe NemerleAll.nproj /target:IntegrationFull /p:Configuration=Release /p:NTargetName=Build /p:TargetFrameworkVersion=v4.0 /p:NeedNewExtension=True
 ```
